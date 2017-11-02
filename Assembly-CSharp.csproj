@@ -96,6 +96,7 @@
      <Compile Include="Assets\Admob\GoogleMobileAds\Platforms\iOS\Utils.cs" />
      <Compile Include="Assets\Scripts\GameManagerAdmobAds.cs" />
      <Compile Include="Assets\Scripts\GameManagerUnityAds.cs" />
+     <Compile Include="Assets\Scripts\test.cs" />
      <None Include="Assets\Admob\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml" />
      <None Include="Assets\Admob\GoogleMobileAds\Editor\GoogleMobileAdsDependencies.xml" />
      <None Include="Assets\Admob\PlayServicesResolver\Editor\play-services-resolver_v1.2.59.0.txt" />
