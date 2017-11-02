@@ -32,8 +32,8 @@ public class GameManagerUnityAds : MonoBehaviour
         while (!Advertisement.IsReady())
             yield return null;
         
-        UnityRewardedAdsButton.interactable = false;
-        UnitySkipAdsButton.interactable = false;
+        UnityRewardedAdsButton.interactable = true;
+        UnitySkipAdsButton.interactable = true;
 
         log.text = "Unity Ads Ready let the game earn money. Watch it. Watch it.";
     }
