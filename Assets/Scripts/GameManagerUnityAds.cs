@@ -85,6 +85,9 @@ public class GameManagerUnityAds : MonoBehaviour
 
                 SetButtonsFalse();
 
+                StartCoroutine(ShowButtonWhenAdsReady());// again checking when the ads will available to watch.
+
+
                 break;
 
             case ShowResult.Failed:
@@ -93,6 +96,8 @@ public class GameManagerUnityAds : MonoBehaviour
                 log.text = "The Unity ad failed to be shown.";
 
                 SetButtonsFalse();
+
+                StartCoroutine(ShowButtonWhenAdsReady());// again checking when the ads will available to watch.
 
                 break;
 

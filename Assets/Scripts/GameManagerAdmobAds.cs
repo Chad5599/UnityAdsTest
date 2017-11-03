@@ -26,6 +26,24 @@ public class GameManagerAdmobAds : MonoBehaviour
     private NativeExpressAdView nativeExpressAdView;
     private RewardBasedVideoAd rewardBasedVideo;
 
+   // public static string key = "pub-6634668988903516";
+
+    public string bannerId = "ca-app-pub-6634668988903516/7334564429";
+    public string interstitialId = "ca-app-pub-6634668988903516/7049469875";
+    public string rewardedId = "ca-app-pub-6634668988903516/2317331027";
+
+    private static string outputMessage = string.Empty;
+
+    public static string OutputMessage
+    {
+        set { outputMessage = value; }
+    }
+
+    public string AndroidPublicKey
+    {
+        get { return null;}
+    }
+
     void Start()
     {
         Button btn1 = requestBannerButton.GetComponent<Button>();
@@ -58,58 +76,48 @@ public class GameManagerAdmobAds : MonoBehaviour
         MobileAds.Initialize(appId);
 
         // Get singleton reward based video ad reference.
-        this.rewardBasedVideo = RewardBasedVideoAd.Instance;
+        rewardBasedVideo = RewardBasedVideoAd.Instance;
 
         // RewardBasedVideoAd is a singleton, so handlers should only be registered once.
         // Called when an ad request has successfully loaded.
-        this.rewardBasedVideo.OnAdLoaded += this.HandleRewardBasedVideoLoaded;
+        rewardBasedVideo.OnAdLoaded += HandleRewardBasedVideoLoaded;
         // Called when an ad request failed to load.
-        this.rewardBasedVideo.OnAdFailedToLoad += this.HandleRewardBasedVideoFailedToLoad;
+        rewardBasedVideo.OnAdFailedToLoad += HandleRewardBasedVideoFailedToLoad;
         // Called when an ad is shown.
-        this.rewardBasedVideo.OnAdOpening += this.HandleRewardBasedVideoOpened;
+        rewardBasedVideo.OnAdOpening += HandleRewardBasedVideoOpened;
         // Called when the ad starts to play.
-        this.rewardBasedVideo.OnAdStarted += this.HandleRewardBasedVideoStarted;
+        rewardBasedVideo.OnAdStarted += HandleRewardBasedVideoStarted;
         // Called when the user should be rewarded for watching a video.
-        this.rewardBasedVideo.OnAdRewarded += this.HandleRewardBasedVideoRewarded;
+        rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
         // Called when the ad is closed.
-        this.rewardBasedVideo.OnAdClosed += this.HandleRewardBasedVideoClosed;
+        rewardBasedVideo.OnAdClosed += HandleRewardBasedVideoClosed;
         // Called when the ad click caused the user to leave the application.
-        this.rewardBasedVideo.OnAdLeavingApplication += this.HandleRewardBasedVideoLeftApplication;
+        rewardBasedVideo.OnAdLeavingApplication += HandleRewardBasedVideoLeftApplication;
     }
 
     private void RequestBanner()
     {
-        // These ad units are configured to always serve test ads.
-        #if UNITY_EDITOR
-        string adUnitId = "unused";
-        #elif UNITY_ANDROID
-        string adUnitId = "ca-app-pub-6634668988903516/7334564429";
-        #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-6634668988903516/7334564429";
-        #else
-        string adUnitId = "unexpected_platform";
-        #endif
 
         // Clean up banner ad before creating a new one.
-        if (this.bannerView != null)
+        if (bannerView != null)
         {
-            this.bannerView.Destroy();
+            bannerView.Destroy();
         }
 
         // Create a 320x50 banner at the top of the screen.
-        this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Top);
+        bannerView = new BannerView(bannerId, AdSize.SmartBanner, AdPosition.Top);
 
         // Register for ad events.
         // Called when an ad request has successfully loaded.
-        this.bannerView.OnAdLoaded += this.HandleAdLoaded;
+        bannerView.OnAdLoaded += HandleAdLoaded;
         // Called when an ad request failed to load.
-        this.bannerView.OnAdFailedToLoad += this.HandleAdFailedToLoad;
+        bannerView.OnAdFailedToLoad += HandleAdFailedToLoad;
         // Called when an ad is clicked.
-        this.bannerView.OnAdOpening += this.HandleAdOpened;
+        bannerView.OnAdOpening += HandleAdOpened;
         // Called when the user returned from the app after an ad click.
-        this.bannerView.OnAdClosed += this.HandleAdClosed;
+        bannerView.OnAdClosed += HandleAdClosed;
         // Called when the ad click caused the user to leave the application.
-        this.bannerView.OnAdLeavingApplication += this.HandleAdLeftApplication;
+        bannerView.OnAdLeavingApplication += HandleAdLeftApplication;
 
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
@@ -117,55 +125,49 @@ public class GameManagerAdmobAds : MonoBehaviour
         // Load the banner with the request.
         bannerView.LoadAd(request);
 
+
         statusAds.text = "Processing banner";
         log.text = "button RequestBanner() pressed";
     }
 
     public void DestroyBanner()
     {
-        this.bannerView.Destroy();
+        bannerView.Destroy();
         log.text = "button DestroyBanner() pressed";
     }
 
     private void RequestInterstitial()
     {
-        // These ad units are configured to always serve test ads.
-        #if UNITY_EDITOR
-        string adUnitId = "unused";
-        #elif UNITY_ANDROID
-        string adUnitId = "ca-app-pub-6634668988903516/7049469875";
-        #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-6634668988903516/7049469875";
-        #else
-        string adUnitId = "unexpected_platform";
-        #endif
 
         // Clean up interstitial ad before creating a new one.
-        if (this.interstitial != null)
+        if (interstitial != null)
         {
-            this.interstitial.Destroy();
+            interstitial.Destroy();
         }
 
         // Create an interstitial.
-        this.interstitial = new InterstitialAd(adUnitId);
+        interstitial = new InterstitialAd(interstitialId);
 
         // Register for ad events.
         // Called when an ad request has successfully loaded.
-        this.interstitial.OnAdLoaded += this.HandleInterstitialLoaded;
+        interstitial.OnAdLoaded += HandleInterstitialLoaded;
         // Called when an ad request failed to load.
-        this.interstitial.OnAdFailedToLoad += this.HandleInterstitialFailedToLoad;
+        interstitial.OnAdFailedToLoad += HandleInterstitialFailedToLoad;
         // Called when an ad is shown.
-        this.interstitial.OnAdOpening += this.HandleInterstitialOpened;
+        interstitial.OnAdOpening += HandleInterstitialOpened;
         // Called when the ad is closed.
-        this.interstitial.OnAdClosed += this.HandleInterstitialClosed;
+        interstitial.OnAdClosed += HandleInterstitialClosed;
         // Called when the ad click caused the user to leave the application.
-        this.interstitial.OnAdLeavingApplication += this.HandleInterstitialLeftApplication;
+        interstitial.OnAdLeavingApplication += HandleInterstitialLeftApplication;
 
+          
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the interstitial with the request.
         interstitial.LoadAd(request);
 
+       
+       
         statusAds.text = "Processing Interstitial";
         log.text = "button RequestInerstitial() pressed";
     }
@@ -173,10 +175,10 @@ public class GameManagerAdmobAds : MonoBehaviour
     private void ShowInterstitial()
     {
         log.text = "button ShowInterstitial() pressed";
-        if (this.interstitial.IsLoaded())
+        if (interstitial.IsLoaded())
         {
             statusAds.text = "Showing Interstitial";
-            this.interstitial.Show();
+            interstitial.Show();
         }
         else
         {
@@ -188,27 +190,18 @@ public class GameManagerAdmobAds : MonoBehaviour
     public void DestroyInterstitial()
     {
         statusAds.text = "Destroyed Interstitial";
-        this.interstitial.Destroy();
+        interstitial.Destroy();
         log.text = "button DestroyInterstitial() pressed";
     }
 
     private void RequestRewardBasedVideo()
     {
-        #if UNITY_EDITOR
-        string adUnitId = "unused";
-        #elif UNITY_ANDROID
-        string adUnitId = "ca-app-pub-6634668988903516/2317331027";
-        #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-6634668988903516/2317331027";
-        #else
-        string adUnitId = "unexpected_platform";
-        #endif
-
+       
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded video ad with the request.
-        this.rewardBasedVideo.LoadAd(request, adUnitId);
-
+        rewardBasedVideo.LoadAd(request, rewardedId);
+       
         statusAds.text = "Processing Video";
         log.text = "button RequestRewardBasedVideo() pressed";
     }
@@ -216,10 +209,10 @@ public class GameManagerAdmobAds : MonoBehaviour
     private void ShowRewardBasedVideo()
     {
         log.text = "button ShowRewardBasedVideo() pressed";
-        if (this.rewardBasedVideo.IsLoaded())
+        if (rewardBasedVideo.IsLoaded())
         {
         statusAds.text = "Showing video";
-            this.rewardBasedVideo.Show();
+            rewardBasedVideo.Show();
         }
         else
         {
@@ -233,7 +226,7 @@ public class GameManagerAdmobAds : MonoBehaviour
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         statusAds.text = "Loaded Banner";
-        Debug.Log("HandleAdLoaded event received");
+        Debug.Log("HandleAdLoaded event received :");
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
