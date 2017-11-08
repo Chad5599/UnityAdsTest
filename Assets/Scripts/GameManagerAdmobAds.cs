@@ -23,25 +23,21 @@ public class GameManagerAdmobAds : MonoBehaviour
 
     private BannerView bannerView;
     private InterstitialAd interstitial;
-    private NativeExpressAdView nativeExpressAdView;
     private RewardBasedVideoAd rewardBasedVideo;
 
-    public static string key = "pub-6634668988903516";                               
-    public string bannerId = "ca-app-pub-6634668988903516/7334564429";
-    public string interstitialId = "ca-app-pub-6634668988903516/7049469875";
-    public string rewardedId = "ca-app-pub-6634668988903516/2317331027";
+    //public static string key = "pub-6634668988903516";
 
-    private static string outputMessage = string.Empty;
+    //private static string outputMessage = string.Empty;
 
-    public static string OutputMessage
-    {
-        set { outputMessage = value; }
-    }
+    //public static string OutputMessage
+    //{
+    //    set { outputMessage = value; }
+    //}
 
-    public string AndroidPublicKey
-    {
-        get { return key; }
-    }
+    //public string AndroidPublicKey
+    //{
+    //    get { return key; }
+    //}
 
     void Start()
     {
@@ -98,6 +94,14 @@ public class GameManagerAdmobAds : MonoBehaviour
     private void RequestBanner()
     {
 
+        #if UNITY_ANDROID
+        string bannerId = "ca-app-pub-6634668988903516/7334564429";
+        #elif UNITY_IPHONE
+        string bannerId = "add bannerId for IOS";
+        #else
+        string bannerId = "unexpected_platform";
+        #endif
+
         // Clean up banner ad before creating a new one.
         if (bannerView != null)
         {
@@ -138,6 +142,14 @@ public class GameManagerAdmobAds : MonoBehaviour
 
     private void RequestInterstitial()
     {
+
+        #if UNITY_ANDROID
+        string interstitialId = "ca-app-pub-6634668988903516/7049469875";
+        #elif UNITY_IPHONE
+        string interstitialId = "add interstitialId for IOS";
+        #else
+        string interstitialId = "unexpected_platform";
+        #endif
 
         // Clean up interstitial ad before creating a new one.
         if (interstitial != null)
@@ -196,6 +208,14 @@ public class GameManagerAdmobAds : MonoBehaviour
 
     private void RequestRewardBasedVideo()
     {
+
+        #if UNITY_ANDROID
+        string rewardedId = "ca-app-pub-6634668988903516/2317331027";
+        #elif UNITY_IPHONE
+        string rewardedId = "add rewardedId for IOS";
+        #else
+        string interstitialId = "unexpected_platform";
+        #endif
        
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
