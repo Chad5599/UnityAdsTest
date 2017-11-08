@@ -26,8 +26,7 @@ public class GameManagerAdmobAds : MonoBehaviour
     private NativeExpressAdView nativeExpressAdView;
     private RewardBasedVideoAd rewardBasedVideo;
 
-   // public static string key = "pub-6634668988903516";
-
+    public static string key = "pub-6634668988903516";                               
     public string bannerId = "ca-app-pub-6634668988903516/7334564429";
     public string interstitialId = "ca-app-pub-6634668988903516/7049469875";
     public string rewardedId = "ca-app-pub-6634668988903516/2317331027";
@@ -41,7 +40,7 @@ public class GameManagerAdmobAds : MonoBehaviour
 
     public string AndroidPublicKey
     {
-        get { return null;}
+        get { return key; }
     }
 
     void Start()
@@ -93,6 +92,7 @@ public class GameManagerAdmobAds : MonoBehaviour
         rewardBasedVideo.OnAdClosed += HandleRewardBasedVideoClosed;
         // Called when the ad click caused the user to leave the application.
         rewardBasedVideo.OnAdLeavingApplication += HandleRewardBasedVideoLeftApplication;
+
     }
 
     private void RequestBanner()
@@ -211,7 +211,7 @@ public class GameManagerAdmobAds : MonoBehaviour
         log.text = "button ShowRewardBasedVideo() pressed";
         if (rewardBasedVideo.IsLoaded())
         {
-        statusAds.text = "Showing video";
+            statusAds.text = "Showing video";
             rewardBasedVideo.Show();
         }
         else
