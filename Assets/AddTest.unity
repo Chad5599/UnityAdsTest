@@ -911,6 +911,7 @@ GameObject:
   - component: {fileID: 460652067}
   - component: {fileID: 460652068}
   - component: {fileID: 460652066}
+  - component: {fileID: 460652069}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -972,6 +973,20 @@ MonoBehaviour:
   UnitySkipAdsButton: {fileID: 1717851777}
   log: {fileID: 277835492}
   coins: {fileID: 1085139533}
+--- !u!114 &460652069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 460652065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8ee30ba133e4efba71b34b9ccd064a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadVideo: {fileID: 1594448825}
+  showVideo: {fileID: 1801503427}
+  log: {fileID: 277835492}
 --- !u!1 &463240129
 GameObject:
   m_ObjectHideFlags: 0
